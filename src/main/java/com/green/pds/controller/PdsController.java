@@ -84,6 +84,44 @@ public class PdsController {
 		
 	}
 	
+	// 글 쓰기
+	// /Pds/WriteForm?menu_id=MENU01&nowpage=1
+	@RequestMapping("/WriteForm")
+	public  ModelAndView  writeForm(
+		@RequestParam  HashMap<String, Object> map	) {
+		
+		List<MenuDTO>  menuList  =  menuMapper.getMenuList();
+				
+		//--------------------------
+		ModelAndView   mv        =  new ModelAndView();
+		mv.setViewName("pds/write");
+		mv.addObject("menuList",  menuList);
+		mv.addObject("map",       map);
+		return         mv;
+	}
+	
+	
+	// 내용보기
+	// /Pds/View?idx=127&menu_id=MENU01&nowpage=3
+	@RequestMapping("/View")
+	public  ModelAndView   view(
+		@RequestParam  HashMap<String, Object>  map	) {
+		
+		// 넘겨줄 pdsDto 정보를 조회 idx
+		
+		// 넘겨줄 filesDto 정보를 조회 idx
+		
+		//-----------------------------------
+		ModelAndView   mv     =   new ModelAndView();		
+		mv.setViewName("pds/view");
+		// mv.addObject("menuList",  menuList);
+		
+		mv.addObject("map",       map);
+		return         mv;
+		
+	}
+	
+	
 }
 
 

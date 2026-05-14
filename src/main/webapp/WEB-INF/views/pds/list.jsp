@@ -123,7 +123,7 @@
 	      <option value="content">내용</option> 
 	      <option value="writer">작성자</option> 
 	    </select>
-	    <input type="text" name="keyword" />
+	    <input type="text" name="keyword"  value="${ map.keyword }"/>
 	    <input type="submit" value="검색" />	    
 	  </div>
 	  </form>
