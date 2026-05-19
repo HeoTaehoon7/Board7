@@ -85,9 +85,7 @@
             <div  class="text-start">  
                <a  class = "aDelete" 
                 style = "text-decoration:none;"
-                href  = "/deleteFile?file_num=${ file.file_num }">
-               ❌
-               </a>
+                href  = "/deleteFile?file_num=${ file.file_num }">❌</a>
                
                <a href="/Pds/filedownload/${file.file_num}">
                ${ file.filename }
