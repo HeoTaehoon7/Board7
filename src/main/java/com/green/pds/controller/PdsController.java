@@ -10,11 +10,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -182,12 +184,31 @@ public class PdsController {
 		
 	}
 	
+	// /Pds/Delete?idx=817&menu_id=MENU03&nowpage=1
+	@RequestMapping("/Delete")
+	public  ModelAndView   delete(
+		@RequestParam  Map<String, Object> map	) {
+		System.out.println( "delete map:" + map );
+		
+		// db 에서 자료 삭제
+		pdsService.setDelete( map );
+		
+		
+		// 삭제 이후에 목록조회로 돌아가기
+		ModelAndView   mv   =  new ModelAndView();
+		String         loc  =  "redirect:/Pds/List"
+			+	"?menu_id="  + map.get("menu_id")
+			+   "&nowpage="  + map.get("now_page"); 
+		mv.setViewName( loc );		
+		return         mv;		
+	}
+	
 	//-----------------------------------------------------------------
 	// 파일다운로드
 	// 서버에서 바이너리데이터를 다운받는다 : daya 덩어리
 	//-----------------------------------------------------------------
-	// http://localhost:8080/Pds/filedownload/1
-	@RequestMapping("/filedownload/{file_num}")
+	// http://localhost:8080/Pds/filedownload/1  
+	@GetMapping("/filedownload/{file_num}")     // ?file_num=1
 	@ResponseBody     // 내려주는 것은 data 다
 	public   void   downloadFile(
 		HttpServletResponse                       res,

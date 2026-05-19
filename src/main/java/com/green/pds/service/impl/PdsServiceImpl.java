@@ -20,7 +20,7 @@ public class PdsServiceImpl implements PdsService {
 	// part1.upload-path=D:/dev/springboot/data/
 	// import org.springframework.beans.factory.annotation.Value;
 	@Value("${part1.upload-path}")
-	private  String   uploadPath;
+	private   String   uploadPath;
 		
 	@Autowired
 	private   PdsMapper  pdsMapper;
@@ -71,7 +71,7 @@ public class PdsServiceImpl implements PdsService {
 		// 3.  Files 에 저장
 		List<FilesDto>  fileList = (List<FilesDto>) map.get("fileList");
 		if( fileList.size() > 0  )
-			pdsMapper.setFileWriter( map );
+			pdsMapper.setFileWriter( map );  // insertFiles
 		
 		
 	}
