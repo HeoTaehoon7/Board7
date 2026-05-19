@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.green.board.dto.BoardDto;
+import com.green.interceptor.AuthInterceptor;
 import com.green.menus.dto.MenuDTO;
 import com.green.menus.mapper.MenuMapper;
 import com.green.paging.dto.Pagination;
@@ -39,6 +40,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/Pds")
 public class PdsController {
+
+    private final AuthInterceptor authInterceptor;
 	
 	@Value("${part1.upload-path}")
 	private   String       uploadPath; 
@@ -51,6 +54,10 @@ public class PdsController {
 	
 	@Autowired
 	private   PdsService   pdsService;
+
+    PdsController(AuthInterceptor authInterceptor) {
+        this.authInterceptor = authInterceptor;
+    }
 	
 	// /Pds/List?menu_id=MENU01&nowpage=1
 	// /Pds/List?menu_id=MENU01&nowpage=3&searchType=title&keyword=11
@@ -228,6 +235,27 @@ public class PdsController {
 		return   mv;
 	}
 	
+	// /Pds/Update
+	// map {idx=818, menu_id=MENU01, nowpage=1, title=지울글 수정, content=asdfas ㅁㄴㅇㄹ }
+	// MultipartFile [] { upfile=(binary), upfile=(binary) } 
+	@RequestMapping("/Update")
+	public  ModelAndView  update(
+		@RequestParam    HashMap<String, Object>  map,
+		@RequestParam("value=upfile")  MultipartFile []  uploadfiles
+			) {
+		
+		// 필요한 정보 수정
+		pdsService.setUpdate(map, uploadfiles);
+		
+		// 돌아갈 주소
+		ModelAndView  mv      =  new ModelAndView();
+		String        loc     =  "redirect:/Pds/List"
+				 + "?menu_id=" + map.get("menu_id")
+				 + "&nowpage=" + map.get("nowpage");
+ 		mv.setViewName(loc);
+		return     mv;
+		
+	}
 	
 	
 	//-----------------------------------------------------------------

@@ -181,6 +181,16 @@
 	
 	</delete>
 	
+	<!--  setUpdate -->
+	<update  id="setUpdate">
+	
+      UPDATE  BOARD
+       SET    TITLE     = #{ title   }
+             , CONTENT  = #{ content }  
+       WHERE  IDX = #{ idx }
+	
+	</update>
+	
 </mapper>
 
 
