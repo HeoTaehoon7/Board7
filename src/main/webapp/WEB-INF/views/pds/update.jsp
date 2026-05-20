@@ -86,7 +86,7 @@
             <div  class="text-start">  
                <a  class = "aDelete" 
                 style = "text-decoration:none;"
-                href  = "/deleteFile?file_num=${ file.file_num }">❌</a>
+                href  = "/deleteFile/${ file.file_num }">❌</a>
                
                <a href="/Pds/filedownload/${file.file_num}">
                ${ file.filename }
@@ -137,9 +137,36 @@
 			  tdfileEl.innerHTML  = html 		 
 		  }
 	  })
+	  	  	  
+	  // 입력항목 체크 : title 은 필수입력
 	  
-	  // 입력항목 체크
+	  // ❌ 을 클릭하면
+	  const  aDeleteEls  =  document.querySelectorAll('.aDelete')
+	  aDeleteEls.forEach( function( aDeleteEl, index  ) {
+		  aDeleteEl.addEventListener('click', function( e ) {
+			  console.log( e )
+			  //  alert('❌ 을 클릭')
+			  const  aEl  =  e.target
+			  let    loc  =  aEl.href   // "http://localhost:8080/deleteFile/11"
+			  // 비동기호출 서버명령을 실행하고 돌아돈다
+			  fetch( loc )
+				  .then((response) => response.json())
+				  .then((json) => {
+					  console.log(json)
+				  })
+			      .catch((error) => {
+			    	  console.dir(error)
+			    	  alert(error)			    	  
+			      } )
+			  
+			  // 이동금지
+			  e.preventDefault();
+			  e.stopPropagation();
+		  } )  
+	  })
 	  
+	  
+ 	  
 	</script>
   
   
