@@ -171,6 +171,15 @@
 	
 	</delete>
 	
+	<!-- deleteUploadFileFileNum -->
+	<delete  id = "deleteUploadFileFileNum">
+	
+	  DELETE
+       FROM    FILES
+       WHERE   FILE_NUM  = #{ file_num }
+	
+	</delete>
+	
 	
 	<!-- setDelete : idx 에 해당하는 Board 정보를 삭제 -->
 	<delete  id="setDelete">

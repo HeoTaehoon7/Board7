@@ -1,6 +1,8 @@
 package com.green.pds.controller;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +24,7 @@ public class PdsRestController {
 	
 	// /deleteFile/11
 	@RequestMapping("/deleteFile/{file_num}")
-	public  void  deleteFile(
+	public  Map<String, Object>  deleteFile(
 		@PathVariable(value="file_num")  long file_num
 			) {
 		
@@ -35,7 +37,14 @@ public class PdsRestController {
 			file.delete();
 		
 		// files table 의 정보를 삭제
+		pdsMapper.deleteUploadFileFileNum( file_num );
 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("status",  "Ok");
+		
+		return map;
+		
+		// restController 에서 리턴할때는 java 객체나 Map 구조를 리턴하면 json을 내려준다
 		
 	}
 	

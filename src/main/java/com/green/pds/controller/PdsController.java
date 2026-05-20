@@ -175,6 +175,12 @@ public class PdsController {
 		// 넘겨줄 pdsDto 정보를 조회 idx
 		PdsDto         pdsDto    =  pdsService.getPds( map );
 		
+		// 내용보기 줄바꿈 변경 \n -> <br>
+		if( pdsDto.getContent() != null ) { 
+			String  content = pdsDto.getContent().replace("\n", "<br>");
+			pdsDto.setContent(content);
+		}
+		
 		// 넘겨줄 filesDto 정보를 조회 idx
 		List<FilesDto> fileList  =  pdsService.getFileList( map );
 		
@@ -241,7 +247,7 @@ public class PdsController {
 	@RequestMapping("/Update")
 	public  ModelAndView  update(
 		@RequestParam    HashMap<String, Object>  map,
-		@RequestParam("value=upfile")  MultipartFile []  uploadfiles
+		@RequestParam(value="upfile")  MultipartFile []  uploadfiles
 			) {
 		
 		// 필요한 정보 수정

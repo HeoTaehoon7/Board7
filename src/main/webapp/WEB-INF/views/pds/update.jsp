@@ -96,12 +96,14 @@
         
           <hr />
           <!-- 새 파일을 추가 -->
+          <div id="addNewFile">
           <input type="button"  id="btnAddFile"  value="파일추가(최대 100MByte)" /><br>
-          <input type="file"    name="upfile"    class="upfile"  multiple /><br>             
+          <input type="file"    name="upfile"    class="upfile"  multiple /><br>
+          </div>             
         </td>  
       </tr>  
       <tr>
-        <td colspan="2">
+        <td colspan="4">
           <input type="submit"  value="추가" />
           <input type="button"  value="목록" id="goList" />    
         </td>
@@ -126,15 +128,16 @@
 	  // 파일입력창 추가
 	  const  btnAddFileEl  =  document.querySelector('#btnAddFile')
 	  const  tdfileEl      =  document.querySelector('#tdfile')
+	  const  addNewFileEl  =  document.querySelector('#addNewFile')
 	  let    tag           =  '<input type="file" name="upfile" class="upfile" multiple /><br>'  
-	  let    html          =  tdfileEl.innerHTML 
+	  let    html          =  addNewFileEl.innerHTML 
 	  // js 에서 실행할때 새로 추가된 버튼은 이벤트가 한번만 작동 btnAddFileEl
 	  // 해결 : 이벤트를 부모 element 에 설정
 	  tdfileEl.addEventListener('click', function( e ) {
 		  console.dir( e.target )  // #btnAddFile, .upfile
 		  if( e.target.id == 'btnAddFile' ) {
-			  html               +=  tag
-			  tdfileEl.innerHTML  = html 		 
+			  html                    +=  tag
+			  addNewFileEl.innerHTML   = html 		 
 		  }
 	  })
 	  	  	  
@@ -144,24 +147,31 @@
 	  const  aDeleteEls  =  document.querySelectorAll('.aDelete')
 	  aDeleteEls.forEach( function( aDeleteEl, index  ) {
 		  aDeleteEl.addEventListener('click', function( e ) {
-			  console.log( e )
+			  // 이동금지
+			  e.preventDefault();
+			  e.stopPropagation();
 			  //  alert('❌ 을 클릭')
 			  const  aEl  =  e.target
+			  console.dir( aEl )
+			  //const  parentDiv = document.querySelector('div:has(.aDelete)')
+	          // console.dir(parentDiv)
 			  let    loc  =  aEl.href   // "http://localhost:8080/deleteFile/11"
 			  // 비동기호출 서버명령을 실행하고 돌아돈다
+			  
 			  fetch( loc )
 				  .then((response) => response.json())
 				  .then((json) => {
 					  console.log(json)
+					  // alert(json.status)
+					 
+					  aEl.parentElement.remove();					  
 				  })
 			      .catch((error) => {
 			    	  console.dir(error)
 			    	  alert(error)			    	  
 			      } )
 			  
-			  // 이동금지
-			  e.preventDefault();
-			  e.stopPropagation();
+			
 		  } )  
 	  })
 	  
